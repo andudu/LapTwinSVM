@@ -1,0 +1,2 @@
+# LapTwinSVM
+Course Project KMPA
