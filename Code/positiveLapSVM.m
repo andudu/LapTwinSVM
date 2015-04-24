@@ -17,7 +17,7 @@ function [rho_plus ] = positiveLapSVM(L,A,B,M,c_1,c_2,c_3,sigma)
     lb= zeros(n_negative,1); % lower bound for alpha
     ub = c_1* e_minus; % upper bound for beta
     f = e_minus;
-    alpha = quadprog(H,f,[],[],[],[],lb,ub);
+    alpha = quadprog(-H,-f,[],[],[],[],lb,ub);
 
     %rho_plus = [lamda_plus b_plus]^T
     rho_plus =-1* inv(H_phi'*H_phi + c_2*O_phi+c_3*J_phi'*L*J_phi)*G_phi'*alpha;

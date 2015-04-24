@@ -16,9 +16,9 @@ B = M(negative_indices,:);
 % Parameters
 c_1 = 4;
 c_2 = 0.024;
-c_3 = 0.8;
-sigma = 1.0;
-k = 5;
+c_3 = 1;
+sigma = 5.0;
+k = 10;
 
 % Calculate L using D,W (First we need to find W)
 IDX = knnsearch(M,M,'K',k);
@@ -38,21 +38,21 @@ positiveRes = positiveLapSVM(L,A,B, M,c_1,c_2,c_3,sigma);
 negativeRes = negativeLapSVM(L,A,B, M,c_1,c_2,c_3,sigma);
 
 lambda_plus = positiveRes(1:total,:);
-b_plus = positiveRes(total+1:2*total,:);
+b_plus = positiveRes(total+1,:);
 
 lambda_minus = negativeRes(1:total,:);
-b_minus = negativeRes(total+1:2*total,:);
+b_minus = negativeRes(total+1,:);
 
 e = zeros(total,1);
-f_plus = K(M,M')*lamda_plus + e*b_plus;
-f_minus = K(M,M')*lamda_minus + e*b_pminus;
+f_plus = computeRBFKernel(M,M,sigma)*lambda_plus + e*b_plus;
+f_minus = computeRBFKernel(M,M,sigma)*lambda_minus + e*b_minus;
 
 %Find minimum of the distance to two hyperplanes and then classify to
 %positive or negative. Find accuracy
 
 predicted = 2*(min(f_plus,f_minus) == f_plus)-1;
 correct = (predicted == y);
-fprintf('Accuracy: %d\n',sum(correct)/size(correct,2));
+fprintf('Accuracy: %f\n',sum(correct)/size(correct,1));
 
 
 

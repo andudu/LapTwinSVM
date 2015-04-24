@@ -16,7 +16,7 @@ function [rho_minus] = negativeLapSVM(L,A,B,M,c_1,c_2,c_3,sigma)
     lb= zeros(n_positive,1); % lower bound for alpha
     ub = c_2* e_plus; % upper bound for beta
     f = e_plus ;
-    beta = quadprog(-H,-f,[],[],[],[],lb,ub);
+    beta = quadprog(H,f,[],[],[],[],lb,ub);
 
     %rho_plus = [lamda_minus b_minus]^T
     % Is minus symbol required?
