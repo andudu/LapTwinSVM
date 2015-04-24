@@ -49,7 +49,8 @@ f_minus = K(M,M')*lamda_minus + e*b_pminus;
 
 predicted = 2*(min(f_plus,f_minus) == f_plus)-1;
 correct = (predicted == y);
-fprintf('Accuracy: %d\n',sum(correct)/size(correct,2));
+
+fprintf('Accuracy'+str(sum(correct)/size(correct,2)));
 
 %d = min(f_plus,f_minus);
 %d = d>=0;
