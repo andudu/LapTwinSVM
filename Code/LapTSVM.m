@@ -47,17 +47,12 @@ e = zeros(total,1);
 f_plus = K(M,M')*lamda_plus + e*b_plus;
 f_minus = K(M,M')*lamda_minus + e*b_pminus;
 
+%Find minimum of the distance to two hyperplanes and then classify to
+%positive or negative. Find accuracy
+
 predicted = 2*(min(f_plus,f_minus) == f_plus)-1;
 correct = (predicted == y);
 fprintf('Accuracy: %d\n',sum(correct)/size(correct,2));
 
-%d = min(f_plus,f_minus);
-%d = d>=0;
-%zero_indices = find(~b);
-%d(zero_indices) = -1
 
-%distance_x = abs(K())
-
-%Find minimum of the distance to two hyperplanes and then classify to
-%positive or negative. Find accuracy
 
