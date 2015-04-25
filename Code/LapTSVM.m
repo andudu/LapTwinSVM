@@ -20,7 +20,7 @@ c_1 = 4;
 c_2 = 0.024;
 c_3 = 1;
 sigma = 0.2;
-k =1;
+k = 1;
 
 % Calculate L using D,W (First we need to find W)
 IDX = knnsearch(M,M,'K',k);
@@ -52,7 +52,7 @@ f_minus = computeRBFKernel(M,M,sigma)*lambda_minus + e*b_minus;
 %Find minimum of the distance to two hyperplanes and then classify to
 %positive or negative. Find accuracy
 
-predicted = 2*(min(f_plus,f_minus) == f_plus)-1;
+predicted = 2*(min(abs(f_plus),abs(f_minus)) == abs(f_plus))-1;
 correct = (predicted == y);
 fprintf('Accuracy: %f\n',sum(correct)/size(correct,1));
 
@@ -61,4 +61,3 @@ scatter(x(:,1),x(:,2),[],predicted);
 hold on;
 scatter(x(117,1),x(117,2),[],'r');
 scatter(x(118,1),x(118,2),[],'b');
-
