@@ -3,8 +3,13 @@ setpaths
 
 % generating a random dataset
 fprintf('Generating 1000 random data points...\n');
-X=[randn(500,5); 2*randn(500,5)+2];
-Y=[ones(500,1); -ones(500,1)];
+%X=[randn(500,5); 2*randn(500,5)+2];
+%Y=[ones(500,1); -ones(500,1)];
+
+%load('2moons.mat');
+load('clock.mat');
+X=x;
+Y=y;
 
 % generating default options
 options=make_options('gamma_I',1,'gamma_A',1e-5,'NN',6,'KernelParam',0.35);
@@ -15,10 +20,15 @@ options.LaplacianNormalize=0;
 options.NewtonLineSearch=0;
 
 % creating the 'data' structure
-data.X=X;
-data.Y=zeros(size(Y));
-data.Y(1:50)=1; % 50 labeled points of class +1
-data.Y(501:550)=-1; % 50 labeled points of class -1
+%data.X=X;
+%data.Y=zeros(size(Y));
+%data.Y(1:50)=1; % 50 labeled points of class +1
+%data.Y(501:550)=-1; % 50 labeled points of class -1
+
+data.X=x;
+data.Y=zeros(size(y));
+data.Y(123)=1; 
+data.Y(142)=-1; 
 
 fprintf('Computing Gram matrix and Laplacian...\n\n');
 data.K=calckernel(options,X,X);

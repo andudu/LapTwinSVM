@@ -1,8 +1,15 @@
-load('2moons.mat');
+%load('2moon.mat');
+%pos_class_pt = 123;
+%neg_class_pt = 142;
+
+load('clock.mat');
+pos_class_pt = 127;
+neg_class_pt = 1;
+
 M = x;
-true_labels = zeros(200,1);
-true_labels(123) = 1;
-true_labels(142) = -1;
+true_labels = zeros(size(y));
+true_labels(pos_class_pt) = 1;
+true_labels(neg_class_pt) = -1;
 
 total = size(M,1);
 %1:positive
@@ -16,11 +23,11 @@ negative_indices = find(true_labels==-1);
 B = M(negative_indices,:);
 
 % Parameters
-c_1 = 4;
-c_2 = 0.024;
-c_3 = 1;
-sigma = 0.2;
-k = 1;
+c_1 = 0.03125;
+c_2 = 0.0625;
+c_3 = 8;
+sigma = 0.25;
+k = 8;
 
 % Calculate L using D,W (First we need to find W)
 IDX = knnsearch(M,M,'K',k);
@@ -28,9 +35,9 @@ W = zeros(total,total);
 D = zeros(total,total);
 for i = 1:total
    for j = 1:k
-       val = exp(-norm(M(i,:)-M(IDX(i,k),:))/(2*sigma^2));
-       W(i,IDX(i,k)) = val;
-       W(IDX(i,k),i) = val;
+       val = exp(-norm(M(i,:)-M(IDX(i,j),:))/(2*sigma^2));
+       W(i,IDX(i,j)) = val;
+       W(IDX(i,j),i) = val;
    end
    D(i,i) = sum(W(i,:));
 end
@@ -56,8 +63,9 @@ predicted = 2*(min(abs(f_plus),abs(f_minus)) == abs(f_plus))-1;
 correct = (predicted == y);
 fprintf('Accuracy: %f\n',sum(correct)/size(correct,1));
 
+% Plot
 figure;
 scatter(x(:,1),x(:,2),[],predicted);
 hold on;
-scatter(x(117,1),x(117,2),[],'r');
-scatter(x(118,1),x(118,2),[],'b');
+scatter(x(pos_class_pt,1),x(pos_class_pt,2),[],'r');
+scatter(x(neg_class_pt,1),x(neg_class_pt,2),[],'g');
