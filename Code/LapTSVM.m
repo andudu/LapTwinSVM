@@ -23,11 +23,11 @@ negative_indices = find(true_labels==-1);
 B = M(negative_indices,:);
 
 % Parameters
-c_1 = 0.03125;
-c_2 = 0.0625;
-c_3 = 8;
-sigma = 0.25;
-k = 8;
+c_1 = 2;
+c_2 = 2;
+c_3 = 2;
+sigma = 0.5;
+k = 9;
 
 % Calculate L using D,W (First we need to find W)
 IDX = knnsearch(M,M,'K',k);
