@@ -1,5 +1,5 @@
 # LapTwinSVM
-Course Project KMPA
+Course Project KMPA (Implementation of LapTWSVM, LapSVM, TransSVM, Graph Propagation for Semi-Supervised Classification)
 
 
 Directory details:
