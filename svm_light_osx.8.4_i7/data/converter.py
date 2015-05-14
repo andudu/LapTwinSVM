@@ -1,15 +1,15 @@
 from sys import argv
 from itertools import izip
 
+'''
 filename = '2moons'
 pos_class_pt = 123
 neg_class_pt = 142
+'''
 
-'''
 filename = 'clock'
-pos_class_pt = 127
-neg_class_pt = 1
-'''
+pos_class_pt = 1
+neg_class_pt = 127
 
 output_file_train = open(filename+'_train.dat','w')
 output_file_test = open(filename+'_test.dat','w')

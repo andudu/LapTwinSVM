@@ -1,3 +1,6 @@
+% The notation used is exactly same as in the paper
+%Laplacian twin Support Vector Machine for Semi Supervised Classification
+% Zhiquan Qi, Yingjie Tian, Yong Shi
 function [rho_minus] = negativeLapSVM(L,A,B,M,c_1,c_2,c_3,sigma)
     n_positive = size(A,1);
     n_negative = size(B,1);
@@ -17,9 +20,7 @@ function [rho_minus] = negativeLapSVM(L,A,B,M,c_1,c_2,c_3,sigma)
     ub = c_2* e_plus; % upper bound for beta
     f = -e_plus ;
     beta = quadprog(H,f,[],[],[],[],lb,ub);
-
-    %rho_plus = [lamda_minus b_minus]^T
-    % Is minus symbol required?
+    % No negative symbol like positive SVM
     rho_minus= inv(Q_phi'*Q_phi + c_2*U_phi+c_3*F_phi'*L*F_phi)*P_phi'*beta;
 end
     

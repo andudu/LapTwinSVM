@@ -1,10 +1,11 @@
-%load('2moon.mat');
-%pos_class_pt = 123;
-%neg_class_pt = 142;
+%  NOTE: Accuracy is on TRAIN set. It can be modified as required
+% load('2moons.mat');
+% pos_class_pt = 123;
+% neg_class_pt = 142;
 
 load('clock.mat');
-pos_class_pt = 127;
-neg_class_pt = 1;
+pos_class_pt = 1;
+neg_class_pt = 127;
 
 M = x;
 true_labels = zeros(size(y));
@@ -29,12 +30,12 @@ best_c_3 = 0.0;
 best_sigma = 0.0;
 best_k = 0;
 best_predicted = zeros(size(y));
-
-for c_1 = 2.^[-1:1]
-    for c_2 = 2.^[-1:1]
-        for c_3 = 2.^[-1:1]
-            for sigma = 2.^[-1:1]
-                for k = [1:2]
+% Vary c_1,c_2,c_3 , sigma,k in the range required
+for c_1 =  0.1
+    for c_2 =  0.1
+        for c_3 =  0.1:0.1:1
+            for sigma = [0.15]
+                for k = [3]
 
                     fprintf('c_1: %f, c_2: %f, c_3: %f, sigma: %f, k: %f',c_1,c_2,c_3,sigma,k);
                     
@@ -61,7 +62,7 @@ for c_1 = 2.^[-1:1]
                     lambda_minus = negativeRes(1:total,:);
                     b_minus = negativeRes(total+1,:);
 
-                    e = zeros(total,1);
+                    e = ones(total,1);
                     f_plus = computeRBFKernel(M,M,sigma)*lambda_plus + e*b_plus;
                     f_minus = computeRBFKernel(M,M,sigma)*lambda_minus + e*b_minus;
 
@@ -80,6 +81,7 @@ for c_1 = 2.^[-1:1]
                        best_c_2 = c_2;
                        best_c_3 = c_3;
                        best_sigma = sigma;
+                       best_predicted = predicted;
                        best_k = k;
                     end
                 end
@@ -99,5 +101,5 @@ fprintf('Best k: %f\n',best_k);
 figure;
 scatter(x(:,1),x(:,2),[],best_predicted);
 hold on;
-scatter(x(pos_class_pt,1),x(pos_class_pt,2),[],'r');
-scatter(x(neg_class_pt,1),x(neg_class_pt,2),[],'g');
+%scatter(x(pos_class_pt,1),x(pos_class_pt,2),[],'bd','MarkerFaceColor','b');
+%scatter(x(neg_class_pt,1),x(neg_class_pt,2),[],'rd','MarkerFaceColor','r');
